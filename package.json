@@ -1,0 +1,54 @@
+{
+  "name": "@deathlabs/mui-theme-provider",
+  "version": "0.1.0",
+  "description": "deathlabs Material UI theme provider",
+  "keywords": [
+    "material-ui",
+    "mui",
+    "theme-provider",
+    "deathlabs"
+  ],
+  "homepage": "https://github.com/deathlabs/mui-theme-provider#readme",
+  "bugs": {
+    "url": "https://github.com/deathlabs/mui-theme-provider/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deathlabs/mui-theme-provider.git"
+  },
+  "license": "MIT",
+  "author": "Victor Fernandez III",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test"
+  },
+  "devDependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.3.11",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "@mui/material": "^7",
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19"
+  }
+}
