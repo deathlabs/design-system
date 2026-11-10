@@ -32,6 +32,8 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "check": "prettier --check --ignore-path .prettierignore . && tsc -p tsconfig.json --noEmit",
+    "format": "prettier --write --ignore-path .prettierignore .",
     "test": "npm run build && node --test"
   },
   "devDependencies": {
@@ -40,6 +42,7 @@
     "@mui/material": "^7.3.11",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "prettier": "^3.9.10",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "typescript": "^5.9.3"

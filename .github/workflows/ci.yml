@@ -1,0 +1,59 @@
+---
+name: CI
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    name: Root Package
+    runs-on: ubuntu-latest
+    env:
+      GRYPE_FAILURE_THRESHOLD: medium
+
+    steps:
+      - name: Check Out Repository
+        uses: actions/checkout@v7.0.1
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install Root Dependencies
+        run: npm ci
+
+      - name: Install Syft
+        id: syft
+        uses: anchore/sbom-action/download-syft@v0.24.0
+
+      - name: Add Syft to PATH
+        run: echo "$(dirname '${{ steps.syft.outputs.cmd }}')" >> "$GITHUB_PATH"
+
+      - name: Install Grype
+        id: grype
+        uses: anchore/scan-action/download-grype@v7.4.0
+
+      - name: Add Grype to PATH
+        run: echo "$(dirname '${{ steps.grype.outputs.cmd }}')" >> "$GITHUB_PATH"
+
+      - name: Verify Formatting
+        run: make format && git diff --exit-code
+
+      - name: Check Root Package
+        run: make check
+
+      - name: Test Root Package
+        run: make test
+
+      - name: Scan Root Dependencies
+        run: make sbom dependency-scan

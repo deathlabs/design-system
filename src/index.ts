@@ -1,5 +1,5 @@
 export {
   DeathlabsThemeProvider,
   type DeathlabsThemeProviderProps,
-} from './DeathlabsThemeProvider.js';
-export { deathlabsTheme } from './theme.js';
+} from "./DeathlabsThemeProvider.js";
+export { DeathlabsTheme } from "./theme.js";
