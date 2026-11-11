@@ -15,12 +15,12 @@ THEME_PROVIDER_NAME := "@deathlabs/mui-theme-provider"
 .PHONY: setup
 .SILENT: setup
 setup:
-	echo "[*] Installing $(THEME_PROVIDER_NAME)'s NPM dependencies"
+	echo "[*] Installing $(THEME_PROVIDER_NAME)'s dependencies"
 	npm ci
 	cd "$(DEMO_DIR)" && npm ci
 
 # ---------------------------------------------------------
-# Format the provider source files.
+# Format the source code.
 # ---------------------------------------------------------
 
 .PHONY: format
@@ -30,7 +30,7 @@ format:
 	npm run format
 
 # ---------------------------------------------------------
-# Check the provider source files.
+# Check the source code for lint.
 # ---------------------------------------------------------
 
 .PHONY: check
@@ -40,7 +40,7 @@ check:
 	npm run check
 
 # ---------------------------------------------------------
-# Build the provider.
+# Build.
 # ---------------------------------------------------------
 
 .PHONY: build
@@ -50,7 +50,7 @@ build:
 	npm run build
 
 # ---------------------------------------------------------
-# Test the provider.
+# Test.
 # ---------------------------------------------------------
 
 .PHONY: test
@@ -60,7 +60,7 @@ test: build
 	npm test
 
 # ---------------------------------------------------------
-# Generate an SBOM for the provider.
+# Generate an SBOM.
 # ---------------------------------------------------------
 
 .PHONY: sbom
@@ -72,7 +72,7 @@ sbom:
 		-o cyclonedx-json="$(SBOM_PATH)"
 
 # ---------------------------------------------------------
-# Check the provider's SBOM for third-party vulnerabilities.
+# Check the SBOM for third-party vulnerabilities.
 # ---------------------------------------------------------
 
 .PHONY: dependency-scan
@@ -84,7 +84,7 @@ dependency-scan: sbom
 	grype sbom:"$(SBOM_PATH)" --fail-on "$(GRYPE_FAILURE_THRESHOLD)"
 
 # ---------------------------------------------------------
-# Start the local demo.
+# Start a local demo.
 # ---------------------------------------------------------
 
 .PHONY: dev
