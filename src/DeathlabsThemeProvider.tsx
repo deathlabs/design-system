@@ -10,7 +10,7 @@ export function DeathlabsThemeProvider({
   children,
 }: DeathlabsThemeProviderProps) {
   return (
-    <ThemeProvider theme={DeathlabsTheme}>
+    <ThemeProvider defaultMode="dark" theme={DeathlabsTheme}>
       <CssBaseline />
       {children}
     </ThemeProvider>
