@@ -1,2 +1,3 @@
 dist/
+storybook-static/
 *-sbom.json

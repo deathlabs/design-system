@@ -28,4 +28,18 @@ The package exports `AppLayout`, `ClassificationBanner`, `DeathlabsThemeProvider
 
 ## Development
 
-From the repository root, use `make build`, `make check`, and `make test`. Run `make dev` to start the example application.
+From the repository root, use `make build`, `make check`, and `make test`. Run `make dev` to start the application in `examples/`.
+
+Run Storybook for isolated component development:
+
+```bash
+make storybook
+```
+
+Create the static Storybook site in `web/storybook-static/`:
+
+```bash
+make build-storybook
+```
+
+Every story uses `DeathlabsThemeProvider`. Use the Storybook toolbar to change the canvas background or test the mobile, tablet, and desktop viewports.

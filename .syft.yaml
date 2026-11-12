@@ -1,4 +1,4 @@
 exclude:
-  - ./examples/**
-  - ./web/dist/**
+  - ./dist/**
+  - ./storybook-static/**
   - ./*-sbom.json

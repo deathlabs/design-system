@@ -16,7 +16,7 @@ export default defineConfig({
     ],
     alias: {
       '@deathlabs/design-system': fileURLToPath(
-        new URL('../../web/src/index.ts', import.meta.url),
+        new URL('../web/src/index.ts', import.meta.url),
       ),
     },
   },

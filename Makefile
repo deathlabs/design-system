@@ -3,7 +3,7 @@
 # ---------------------------------------------------------
 
 .DEFAULT_GOAL := build
-EXAMPLE_DIR := examples/web
+EXAMPLE_DIR := examples
 WEB_DIR := web
 GRYPE_FAILURE_THRESHOLD ?= medium
 SBOM_PATH ?= design-system-sbom.json
@@ -92,3 +92,21 @@ dependency-scan: sbom
 .SILENT: dev
 dev:
 	cd "$(EXAMPLE_DIR)" && npm run dev
+
+# ---------------------------------------------------------
+# Develop web components in Storybook.
+# ---------------------------------------------------------
+
+.PHONY: storybook
+.SILENT: storybook
+storybook:
+	cd "$(WEB_DIR)" && npm run storybook
+
+# ---------------------------------------------------------
+# Build the static Storybook site.
+# ---------------------------------------------------------
+
+.PHONY: build-storybook
+.SILENT: build-storybook
+build-storybook:
+	cd "$(WEB_DIR)" && npm run build-storybook
