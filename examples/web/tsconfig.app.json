@@ -16,7 +16,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "@deathlabs/mui-theme-provider": ["../src/index.ts"]
+      "@deathlabs/design-system": ["../../web/src/index.ts"]
     },
 
     /* Linting */

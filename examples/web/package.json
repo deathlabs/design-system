@@ -1,5 +1,5 @@
 {
-  "name": "demo",
+  "name": "@deathlabs/design-system-web-example",
   "private": true,
   "version": "0.0.0",
   "type": "module",

@@ -1,20 +1,21 @@
 {
-  "name": "@deathlabs/mui-theme-provider",
+  "name": "@deathlabs/design-system",
   "version": "0.1.0",
-  "description": "deathlabs Material UI theme provider",
+  "description": "Deathlabs design system for Material UI applications",
   "keywords": [
     "material-ui",
     "mui",
+    "design-system",
     "theme-provider",
     "deathlabs"
   ],
-  "homepage": "https://github.com/deathlabs/mui-theme-provider#readme",
+  "homepage": "https://github.com/deathlabs/design-system#readme",
   "bugs": {
-    "url": "https://github.com/deathlabs/mui-theme-provider/issues"
+    "url": "https://github.com/deathlabs/design-system/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deathlabs/mui-theme-provider.git"
+    "url": "git+https://github.com/deathlabs/design-system.git"
   },
   "license": "MIT",
   "author": "Victor Fernandez III",
@@ -39,6 +40,7 @@
   "devDependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.11",
     "@mui/material": "^7.3.11",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
@@ -50,6 +52,7 @@
   "peerDependencies": {
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "@mui/icons-material": "^7",
     "@mui/material": "^7",
     "react": "^18 || ^19",
     "react-dom": "^18 || ^19"

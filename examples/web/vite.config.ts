@@ -15,8 +15,8 @@ export default defineConfig({
       '@emotion/styled',
     ],
     alias: {
-      '@deathlabs/mui-theme-provider': fileURLToPath(
-        new URL('../src/index.ts', import.meta.url),
+      '@deathlabs/design-system': fileURLToPath(
+        new URL('../../web/src/index.ts', import.meta.url),
       ),
     },
   },

@@ -1,4 +1,4 @@
 exclude:
-  - ./demo/**
-  - ./dist/**
-  - ./mui-theme-provider-sbom.json
+  - ./examples/**
+  - ./web/dist/**
+  - ./*-sbom.json

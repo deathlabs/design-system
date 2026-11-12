@@ -3,10 +3,11 @@
 # ---------------------------------------------------------
 
 .DEFAULT_GOAL := build
-DEMO_DIR := demo
+EXAMPLE_DIR := examples/web
+WEB_DIR := web
 GRYPE_FAILURE_THRESHOLD ?= medium
-SBOM_PATH ?= mui-theme-provider-sbom.json
-THEME_PROVIDER_NAME := "@deathlabs/mui-theme-provider"
+SBOM_PATH ?= design-system-sbom.json
+DESIGN_SYSTEM_NAME := "@deathlabs/design-system"
 
 # ---------------------------------------------------------
 # Install dependencies.
@@ -15,9 +16,9 @@ THEME_PROVIDER_NAME := "@deathlabs/mui-theme-provider"
 .PHONY: setup
 .SILENT: setup
 setup:
-	echo "[*] Installing $(THEME_PROVIDER_NAME)'s dependencies"
-	npm ci
-	cd "$(DEMO_DIR)" && npm ci
+	echo "[*] Installing $(DESIGN_SYSTEM_NAME)'s dependencies"
+	cd "$(WEB_DIR)" && npm ci
+	cd "$(EXAMPLE_DIR)" && npm ci
 
 # ---------------------------------------------------------
 # Format the source code.
@@ -26,8 +27,8 @@ setup:
 .PHONY: format
 .SILENT: format
 format:
-	echo "[*] Formatting $(THEME_PROVIDER_NAME)"
-	npm run format
+	echo "[*] Formatting $(DESIGN_SYSTEM_NAME)"
+	cd "$(WEB_DIR)" && npm run format
 
 # ---------------------------------------------------------
 # Check the source code for lint.
@@ -36,8 +37,8 @@ format:
 .PHONY: check
 .SILENT: check
 check:
-	echo "[*] Checking $(THEME_PROVIDER_NAME)"
-	npm run check
+	echo "[*] Checking $(DESIGN_SYSTEM_NAME)"
+	cd "$(WEB_DIR)" && npm run check
 
 # ---------------------------------------------------------
 # Build.
@@ -46,8 +47,8 @@ check:
 .PHONY: build
 .SILENT: build
 build:
-	echo "[*] Building $(THEME_PROVIDER_NAME)"
-	npm run build
+	echo "[*] Building $(DESIGN_SYSTEM_NAME)"
+	cd "$(WEB_DIR)" && npm run build
 
 # ---------------------------------------------------------
 # Test.
@@ -56,8 +57,8 @@ build:
 .PHONY: test
 .SILENT: test
 test: build
-	echo "[*] Testing $(THEME_PROVIDER_NAME)"
-	npm test
+	echo "[*] Testing $(DESIGN_SYSTEM_NAME)"
+	cd "$(WEB_DIR)" && npm test
 
 # ---------------------------------------------------------
 # Generate an SBOM.
@@ -66,8 +67,8 @@ test: build
 .PHONY: sbom
 .SILENT: sbom
 sbom:
-	echo "[*] Generating $(THEME_PROVIDER_NAME)'s SBOM"
-	syft dir:. \
+	echo "[*] Generating $(DESIGN_SYSTEM_NAME)'s SBOM"
+	syft dir:./web \
 		--select-catalogers +javascript-package-cataloger \
 		-o cyclonedx-json="$(SBOM_PATH)"
 
@@ -80,7 +81,7 @@ sbom:
 dependency-scan: sbom
 	echo "[*] Updating the Grype vulnerability database"
 	grype db update
-	echo "[*] Checking $(THEME_PROVIDER_NAME)'s SBOM for third-party vulnerabilities"
+	echo "[*] Checking $(DESIGN_SYSTEM_NAME)'s SBOM for third-party vulnerabilities"
 	grype sbom:"$(SBOM_PATH)" --fail-on "$(GRYPE_FAILURE_THRESHOLD)"
 
 # ---------------------------------------------------------
@@ -90,4 +91,4 @@ dependency-scan: sbom
 .PHONY: dev
 .SILENT: dev
 dev:
-	cd "$(DEMO_DIR)" && npm run dev
+	cd "$(EXAMPLE_DIR)" && npm run dev

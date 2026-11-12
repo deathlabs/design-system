@@ -25,10 +25,12 @@ jobs:
         with:
           node-version: 24
           cache: npm
-          cache-dependency-path: package-lock.json
+          cache-dependency-path: |
+            web/package-lock.json
+            examples/web/package-lock.json
 
       - name: Install Dependencies
-        run: npm ci
+        run: make setup
 
       - name: Format the Source Code
         run: make format && git diff --exit-code
@@ -50,10 +52,12 @@ jobs:
         with:
           node-version: 24
           cache: npm
-          cache-dependency-path: package-lock.json
+          cache-dependency-path: |
+            web/package-lock.json
+            examples/web/package-lock.json
 
       - name: Install Dependencies
-        run: npm ci
+        run: make setup
 
       - name: Run Unit Tests
         run: make test
@@ -72,10 +76,12 @@ jobs:
         with:
           node-version: 24
           cache: npm
-          cache-dependency-path: package-lock.json
+          cache-dependency-path: |
+            web/package-lock.json
+            examples/web/package-lock.json
 
       - name: Install Dependencies
-        run: npm ci
+        run: make setup
 
       - name: Install Syft
         id: syft
@@ -90,8 +96,8 @@ jobs:
       - name: Upload SBOM
         uses: actions/upload-artifact@v7
         with:
-          name: mui-theme-provider-sbom
-          path: mui-theme-provider-sbom.json
+          name: design-system-sbom
+          path: design-system-sbom.json
           if-no-files-found: error
 
   scan-sbom:
@@ -100,13 +106,13 @@ jobs:
     needs: generate-sbom
     env:
       GRYPE_FAILURE_THRESHOLD: medium
-      SBOM_PATH: mui-theme-provider-sbom.json
+      SBOM_PATH: design-system-sbom.json
 
     steps:
       - name: Download SBOM
         uses: actions/download-artifact@v8
         with:
-          name: mui-theme-provider-sbom
+          name: design-system-sbom
 
       - name: Install Grype
         id: grype
