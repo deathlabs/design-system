@@ -527,27 +527,23 @@ npm run storybook
 
 **Step 7.** Press `Ctrl+C` in the terminal to stop Storybook.
 
-**Step 8.** Build the component library.
+**Step 8.** Import the component into `examples/vite-react-ts/src/App.tsx`.
+
+**Step 9.** Start the library watcher and example application from the repository root.
 
 ```bash
-npm run build
+make dev
 ```
 
-**Step 9.** Import the component into `examples/vite-react-ts/src/App.tsx`.
+The command builds the library, watches source changes, and starts the example application.
 
-**Step 10.** Start the example application and verify the component in a consuming application.
+**Step 10.** Edit the component and verify that the example application updates.
 
-```bash
-cd examples/vite-react-ts
-npm run dev
-```
+**Step 11.** Press `Ctrl+C` in the terminal to stop the watcher and example application.
 
-**Step 11.** Press `Ctrl+C` in the terminal to stop the example application.
-
-**Step 12.** Return to the repository root and verify the static Storybook build.
+**Step 12.** Verify the static Storybook build.
 
 ```bash
-cd ../..
 npm run build-storybook
 ```
 
