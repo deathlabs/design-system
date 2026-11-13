@@ -2,4 +2,10 @@ node_modules/
 dist/
 .vite/
 storybook-static/
+coverage/
+playwright-report/
+test-results/
+blob-report/
+*.tsbuildinfo
+*.log
 *-sbom.json
