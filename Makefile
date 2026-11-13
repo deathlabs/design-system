@@ -23,17 +23,4 @@ build:
 .PHONY: dev
 .SILENT: dev
 dev: build
-	set -m; \
-		npm run build -- --watch & \
-		watcher_pid=$$!; \
-		cleanup() { \
-			status=$$?; \
-			trap - EXIT INT TERM; \
-			echo "[*] Stopping the component library watcher"; \
-			kill -- -$$watcher_pid 2>/dev/null || true; \
-			wait $$watcher_pid 2>/dev/null || true; \
-			exit $$status; \
-		}; \
-		trap cleanup EXIT INT TERM; \
-		echo "[*] Starting the example application"; \
-		cd "$(EXAMPLE_PATH)" && npm run dev
+	./scripts/dev.sh "$(EXAMPLE_PATH)"

@@ -11,7 +11,13 @@ const peerDependencies = [
 ];
 
 export default defineConfig({
-  plugins: [react(), dts({ include: ['src'] })],
+  plugins: [
+    react(),
+    dts({
+      exclude: ['src/**/*.stories.*'],
+      include: ['src'],
+    }),
+  ],
   build: {
     lib: {
       entry: 'src/index.ts',
