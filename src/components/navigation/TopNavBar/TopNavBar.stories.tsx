@@ -1,8 +1,9 @@
+import BookIcon from '@mui/icons-material/Book';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, userEvent, within } from 'storybook/test';
 
-import { Button } from '../../inputs/Button';
 import { TopNavBar } from './TopNavBar';
 
 const meta = {
@@ -18,21 +19,25 @@ type Story = StoryObj<typeof meta>;
 
 export const TitleAndActions: Story = {
   args: {
-    children: (
-      <>
-        <Button color="inherit">Help</Button>
-        <Button color="inherit">Account</Button>
-      </>
-    ),
-    position: 'static',
     title: 'deathlabs',
+    userMenu: [{ name: 'Help', href: '#help', icon: <BookIcon /> }],
+    position: 'static',
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const toggle = canvas.getByRole('button', { name: 'Switch to light mode' });
+
+    await expect(canvas.getByTestId('DarkModeIcon')).toBeVisible();
+    await userEvent.click(toggle);
+    await expect(
+      canvas.getByRole('button', { name: 'Switch to dark mode' }),
+    ).toBeVisible();
+    await expect(canvas.getByTestId('LightModeIcon')).toBeVisible();
   },
 };
 
 export const CustomTitle: Story = {
   args: {
-    children: <Button color="inherit">Account</Button>,
-    position: 'static',
     title: (
       <Box sx={{ alignItems: 'baseline', display: 'flex', gap: 1 }}>
         <Typography variant="h6">Operations</Typography>
@@ -41,5 +46,7 @@ export const CustomTitle: Story = {
         </Typography>
       </Box>
     ),
+    userMenu: [{ name: 'Help', href: '#help', icon: <BookIcon /> }],
+    position: 'static',
   },
 };

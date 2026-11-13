@@ -4,7 +4,6 @@ import {
   AccordionDetails,
   AccordionSummary,
   AppLayout,
-  Breadcrumbs,
   Button,
   Card,
   CardActionArea,
@@ -13,21 +12,21 @@ import {
   CardHeader,
   CardMedia,
   Classification,
-  ClassificationBanner,
   DeathlabsThemeProvider,
   Link,
   Pagination,
   Paper,
-  SideNavBar,
   Stepper,
   Tabs,
-  TopNavBar,
-  UserMenu,
 } from '@deathlabs/design-system';
+import CodeIcon from '@mui/icons-material/Code';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import FeedbackIcon from '@mui/icons-material/Feedback';
+import FolderIcon from '@mui/icons-material/Folder';
+import HeadsetIcon from '@mui/icons-material/Headset';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import SettingsIcon from '@mui/icons-material/Settings';
 import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
@@ -35,67 +34,41 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 
+const sideNavBar = {
+  items: [
+    { name: 'Dashboard', href: '#dashboard', icon: <DashboardIcon /> },
+    { name: 'Projects', href: '#projects', icon: <FolderIcon /> },
+    { name: 'Settings', href: '#settings', icon: <SettingsIcon /> },
+  ],
+};
+
+const topNavBar = {
+  title: 'deathlabs',
+  userMenu: [
+    { name: 'User guide', href: '#user-guide', icon: <MenuBookIcon /> },
+    { name: 'Developer guide', href: '#developer-guide', icon: <CodeIcon /> },
+    { name: 'Submit feedback', href: '#feedback', icon: <FeedbackIcon /> },
+    { name: 'Contact us', href: '#contact', icon: <HeadsetIcon /> },
+  ],
+};
+
 export default function App() {
-  const [sideNavOpen, setSideNavOpen] = useState(false);
-  const [sideNavSelection, setSideNavSelection] = useState('Dashboard');
   const [tabValue, setTabValue] = useState(0);
 
   return (
     <DeathlabsThemeProvider>
       <AppLayout
-        classificationBanner={
-          <ClassificationBanner
-            type={Classification.UNCLASSIFIED}
-            sx={{ flexShrink: 0, position: 'static', width: '100%' }}
-          />
-        }
-        topNavigation={
-          <TopNavBar title="deathlabs">
-            <UserMenu />
-          </TopNavBar>
-        }
-        sideNavigation={
-          <SideNavBar open={sideNavOpen} onOpenChange={setSideNavOpen}>
-            <List aria-label="Example navigation">
-              {['Dashboard', 'Projects', 'Settings'].map((label) => (
-                <ListItemButton
-                  key={label}
-                  aria-label={label}
-                  selected={sideNavSelection === label}
-                  onClick={() => setSideNavSelection(label)}
-                  sx={{ minHeight: 44, px: 1.25 }}
-                >
-                  <Box
-                    aria-hidden
-                    sx={{ flexShrink: 0, textAlign: 'center', width: 24 }}
-                  >
-                    {label[0]}
-                  </Box>
-                  <ListItemText
-                    primary={label}
-                    sx={{ ml: 2, opacity: sideNavOpen ? 1 : 0 }}
-                  />
-                </ListItemButton>
-              ))}
-            </List>
-          </SideNavBar>
-        }
+        classification={Classification.UNCLASSIFIED}
+        sideNavBar={sideNavBar}
+        topNavBar={topNavBar}
       >
         <Box
           sx={{
-            mx: 'auto',
             minWidth: 0,
-            p: { xs: 2, sm: 3 },
             width: 'min(100%, 960px)',
           }}
         >
-            <Stack spacing={3}>
-              <Breadcrumbs aria-label="breadcrumb">
-                <Link href="#">Home</Link>
-                <Link href="#">Components</Link>
-                <Typography color="text.primary">Navigation</Typography>
-              </Breadcrumbs>
-
+            <Stack>
               <Box>
                 <Typography gutterBottom variant="h4">
                   Design system primitives
@@ -116,7 +89,7 @@ export default function App() {
                   <Tab label="Activity" />
                   <Tab label="Settings" />
                 </Tabs>
-                <Box sx={{ p: 3 }}>
+                <Box>
                   <Typography>
                     {['Overview content', 'Recent activity', 'Settings content'][tabValue]}
                   </Typography>
@@ -126,7 +99,6 @@ export default function App() {
               <Box
                 sx={{
                   display: 'grid',
-                  gap: 3,
                   gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
                 }}
               >
@@ -170,7 +142,7 @@ export default function App() {
                 </Box>
               </Box>
 
-              <Paper sx={{ p: { xs: 2, sm: 3 } }}>
+              <Paper>
                 <Typography gutterBottom variant="h6">
                   Project setup
                 </Typography>
@@ -183,7 +155,7 @@ export default function App() {
                 </Stepper>
               </Paper>
 
-              <Stack spacing={2} sx={{ alignItems: 'center' }}>
+              <Stack sx={{ alignItems: 'center' }}>
                 <Pagination count={8} color="secondary" />
                 <Link href="#">View navigation documentation</Link>
               </Stack>

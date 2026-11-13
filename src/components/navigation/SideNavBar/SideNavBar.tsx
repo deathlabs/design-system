@@ -1,9 +1,16 @@
-import type { KeyboardEvent, MouseEvent, ReactNode } from 'react';
 import { useState } from 'react';
 
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Box from '@mui/material/Box';
-import MuiDrawer, { type DrawerProps } from '@mui/material/Drawer';
+import MuiDrawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
 import { styled } from '@mui/material/styles';
+
+import type { NavBarItem } from '../NavBarItem';
 
 const StyledDrawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== 'sideNavWidth',
@@ -33,57 +40,21 @@ const StyledDrawer = styled(MuiDrawer, {
   },
 }));
 
-export interface SideNavBarProps
-  extends Omit<DrawerProps, 'children' | 'open' | 'variant'> {
-  children?: ReactNode;
-  open?: boolean;
-  defaultOpen?: boolean;
-  onOpenChange?: (open: boolean) => void;
-  collapsible?: boolean;
-  expandedWidth?: number | string;
-  collapsedWidth?: number | string;
-  expandAriaLabel?: string;
-  collapseAriaLabel?: string;
+export interface SideNavBarProps {
+  items: readonly NavBarItem[];
 }
 
-export const SideNavBar = ({
-  children,
-  open,
-  defaultOpen = false,
-  onOpenChange,
-  collapsible = true,
-  expandedWidth = 240,
-  collapsedWidth = 44,
-  expandAriaLabel = 'Expand sidebar',
-  collapseAriaLabel = 'Collapse sidebar',
-  ...props
-}: SideNavBarProps) => {
-  const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
-  const controlled = open !== undefined;
-  const sideNavOpen = !collapsible || (open ?? uncontrolledOpen);
-  const sideNavWidth = sideNavOpen ? expandedWidth : collapsedWidth;
+export const SideNavBar = ({ items }: SideNavBarProps) => {
+  const [open, setOpen] = useState(false);
+  const [selectedHref, setSelectedHref] = useState(items[0]?.href);
+  const sideNavWidth = open ? 240 : 44;
 
   const toggle = () => {
-    if (!collapsible) return;
-
-    const nextOpen = !sideNavOpen;
-    if (!controlled) setUncontrolledOpen(nextOpen);
-    onOpenChange?.(nextOpen);
-  };
-
-  const handleClick = (event: MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) toggle();
-  };
-
-  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      toggle();
-    }
+    setOpen((currentOpen) => !currentOpen);
   };
 
   return (
-    <StyledDrawer sideNavWidth={sideNavWidth} variant="permanent" {...props}>
+    <StyledDrawer sideNavWidth={sideNavWidth} variant="permanent">
       <Box
         sx={{
           flex: '0 1 auto',
@@ -93,30 +64,34 @@ export const SideNavBar = ({
           overflowY: 'auto',
         }}
       >
-        {children}
+        <List aria-label="Navigation">
+          {items.map((item) => (
+            <ListItemButton
+              key={item.href}
+              component="a"
+              href={item.href}
+              aria-label={item.name}
+              selected={selectedHref === item.href}
+              onClick={() => setSelectedHref(item.href)}
+              sx={{ minHeight: 44, px: 1.25 }}
+            >
+              <Box aria-hidden sx={{ flexShrink: 0, textAlign: 'center', width: 24 }}>
+                {item.icon}
+              </Box>
+              <ListItemText primary={item.name} sx={{ ml: 2, opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          ))}
+        </List>
       </Box>
-      <Box
-        aria-expanded={collapsible ? sideNavOpen : undefined}
-        aria-label={
-          collapsible ? (sideNavOpen ? collapseAriaLabel : expandAriaLabel) : undefined
-        }
-        onClick={collapsible ? handleClick : undefined}
-        onKeyDown={collapsible ? handleKeyDown : undefined}
-        role={collapsible ? 'button' : undefined}
-        tabIndex={collapsible ? 0 : undefined}
-        sx={{
-          cursor: collapsible ? 'pointer' : 'default',
-          flexGrow: 1,
-          flexShrink: 0,
-          minHeight: 44,
-          outline: 'none',
-          '&:focus-visible': collapsible
-            ? {
-                boxShadow: (theme) => `inset 0 0 0 2px ${theme.palette.secondary.main}`,
-              }
-            : undefined,
-        }}
-      />
+      <Box sx={{ flexGrow: 1 }} />
+      <IconButton
+        aria-expanded={open}
+        aria-label={open ? 'Collapse sidebar' : 'Expand sidebar'}
+        onClick={toggle}
+        sx={{ alignSelf: open ? 'flex-end' : 'center', m: 0.25 }}
+      >
+        {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+      </IconButton>
     </StyledDrawer>
   );
 };

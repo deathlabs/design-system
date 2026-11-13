@@ -4,6 +4,7 @@ export * from './Breadcrumbs';
 export * from './Drawer';
 export * from './Link';
 export * from './Menu';
+export * from './NavBarItem';
 export * from './Pagination';
 export * from './SideNavBar';
 export * from './SpeedDial';

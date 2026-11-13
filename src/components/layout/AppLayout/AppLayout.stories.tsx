@@ -1,14 +1,10 @@
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, within } from 'storybook/test';
 
-import { SideNavBar } from '../../navigation/SideNavBar';
-import { TopNavBar } from '../../navigation/TopNavBar';
-import { Classification, ClassificationBanner } from '../ClassificationBanner';
+import { Classification } from '../ClassificationBanner';
 import { AppLayout } from './AppLayout';
 
 const meta = {
@@ -24,26 +20,20 @@ type Story = StoryObj<typeof meta>;
 
 export const AllRegions: Story = {
   args: {
-    classificationBanner: (
-      <ClassificationBanner
-        type={Classification.UNCLASSIFIED}
-        sx={{ position: 'static', width: '100%' }}
-      />
-    ),
-    topNavigation: (
-      <TopNavBar data-testid="top-navigation" position="static" title="Application" />
-    ),
-    sideNavigation: (
-      <SideNavBar data-testid="side-navigation" defaultOpen>
-        <List aria-label="Application navigation">
-          {['Dashboard', 'Projects', 'Settings'].map((label) => (
-            <ListItemButton key={label}>
-              <ListItemText primary={label} />
-            </ListItemButton>
-          ))}
-        </List>
-      </SideNavBar>
-    ),
+    classification: Classification.UNCLASSIFIED,
+    topNavBar: {
+      title: 'Application',
+      userMenu: [
+        { name: 'Account', href: '#account', icon: <AccountCircleIcon /> },
+      ],
+    },
+    sideNavBar: {
+      items: ['Dashboard', 'Projects', 'Settings'].map((name) => ({
+        name,
+        href: `#${name.toLowerCase()}`,
+        icon: name[0],
+      })),
+    },
     children: (
       <Box sx={{ minHeight: 1400, p: 3 }}>
         <Typography variant="h4">Page content</Typography>
@@ -56,9 +46,8 @@ export const AllRegions: Story = {
     const topNavigationBounds = canvas
       .getByTestId('top-navigation')
       .getBoundingClientRect();
-    const sideNavigationBounds = canvas
-      .getByTestId('side-navigation')
-      .getBoundingClientRect();
+    const sideNavigation = canvasElement.querySelector<HTMLElement>('.MuiDrawer-root')!;
+    const sideNavigationBounds = sideNavigation.getBoundingClientRect();
     const main = canvas.getByRole('main');
     const mainRow = main.parentElement as HTMLElement;
     const layout = mainRow.parentElement as HTMLElement;
@@ -78,10 +67,10 @@ export const AllRegions: Story = {
 
     await expect(main.scrollTop).toBeGreaterThan(0);
     await expect(
-      canvas.getByTestId('side-navigation').getBoundingClientRect().top,
+      sideNavigation.getBoundingClientRect().top,
     ).toBeCloseTo(sideNavigationTop);
     await expect(
-      canvas.getByTestId('side-navigation').getBoundingClientRect().top,
+      sideNavigation.getBoundingClientRect().top,
     ).toBeGreaterThanOrEqual(topNavigationBounds.bottom);
   },
 };
