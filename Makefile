@@ -1,112 +1,39 @@
 # ---------------------------------------------------------
-# Set default value.
+# Development settings.
 # ---------------------------------------------------------
 
-.DEFAULT_GOAL := build
-EXAMPLE_DIR := examples
-WEB_DIR := web
-GRYPE_FAILURE_THRESHOLD ?= medium
-SBOM_PATH ?= design-system-sbom.json
-DESIGN_SYSTEM_NAME := "@deathlabs/design-system"
+SHELL := /bin/bash
+.DEFAULT_GOAL := dev
+
+EXAMPLE_PATH ?= examples/vite-react-ts
 
 # ---------------------------------------------------------
-# Install dependencies.
-# ---------------------------------------------------------
-
-.PHONY: setup
-.SILENT: setup
-setup:
-	echo "[*] Installing $(DESIGN_SYSTEM_NAME)'s dependencies"
-	cd "$(WEB_DIR)" && npm ci
-	cd "$(EXAMPLE_DIR)" && npm ci
-
-# ---------------------------------------------------------
-# Format the source code.
-# ---------------------------------------------------------
-
-.PHONY: format
-.SILENT: format
-format:
-	echo "[*] Formatting $(DESIGN_SYSTEM_NAME)"
-	cd "$(WEB_DIR)" && npm run format
-
-# ---------------------------------------------------------
-# Check the source code for lint.
-# ---------------------------------------------------------
-
-.PHONY: check
-.SILENT: check
-check:
-	echo "[*] Checking $(DESIGN_SYSTEM_NAME)"
-	cd "$(WEB_DIR)" && npm run check
-
-# ---------------------------------------------------------
-# Build.
+# Build the component library.
 # ---------------------------------------------------------
 
 .PHONY: build
 .SILENT: build
 build:
-	echo "[*] Building $(DESIGN_SYSTEM_NAME)"
-	cd "$(WEB_DIR)" && npm run build
+	npm run build
 
 # ---------------------------------------------------------
-# Test.
-# ---------------------------------------------------------
-
-.PHONY: test
-.SILENT: test
-test: build
-	echo "[*] Testing $(DESIGN_SYSTEM_NAME)"
-	cd "$(WEB_DIR)" && npm test
-
-# ---------------------------------------------------------
-# Generate an SBOM.
-# ---------------------------------------------------------
-
-.PHONY: sbom
-.SILENT: sbom
-sbom:
-	echo "[*] Generating $(DESIGN_SYSTEM_NAME)'s SBOM"
-	syft dir:./web \
-		--select-catalogers +javascript-package-cataloger \
-		-o cyclonedx-json="$(SBOM_PATH)"
-
-# ---------------------------------------------------------
-# Check the SBOM for third-party vulnerabilities.
-# ---------------------------------------------------------
-
-.PHONY: dependency-scan
-.SILENT: dependency-scan
-dependency-scan: sbom
-	echo "[*] Updating the Grype vulnerability database"
-	grype db update
-	echo "[*] Checking $(DESIGN_SYSTEM_NAME)'s SBOM for third-party vulnerabilities"
-	grype sbom:"$(SBOM_PATH)" --fail-on "$(GRYPE_FAILURE_THRESHOLD)"
-
-# ---------------------------------------------------------
-# Start a local demo.
+# Start the component library watcher and example app.
 # ---------------------------------------------------------
 
 .PHONY: dev
 .SILENT: dev
-dev:
-	cd "$(EXAMPLE_DIR)" && npm run dev
-
-# ---------------------------------------------------------
-# Develop web components in Storybook.
-# ---------------------------------------------------------
-
-.PHONY: storybook
-.SILENT: storybook
-storybook:
-	cd "$(WEB_DIR)" && npm run storybook
-
-# ---------------------------------------------------------
-# Build the static Storybook site.
-# ---------------------------------------------------------
-
-.PHONY: build-storybook
-.SILENT: build-storybook
-build-storybook:
-	cd "$(WEB_DIR)" && npm run build-storybook
+dev: build
+	set -m; \
+		npm run build -- --watch & \
+		watcher_pid=$$!; \
+		cleanup() { \
+			status=$$?; \
+			trap - EXIT INT TERM; \
+			echo "[*] Stopping the component library watcher"; \
+			kill -- -$$watcher_pid 2>/dev/null || true; \
+			wait $$watcher_pid 2>/dev/null || true; \
+			exit $$status; \
+		}; \
+		trap cleanup EXIT INT TERM; \
+		echo "[*] Starting the example application"; \
+		cd "$(EXAMPLE_PATH)" && npm run dev
