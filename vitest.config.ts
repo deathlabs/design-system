@@ -14,12 +14,22 @@ const dirname =
 export default defineConfig({
   optimizeDeps: {
     include: [
+      '@mui/material/Accordion',
+      '@mui/material/AccordionActions',
+      '@mui/material/AccordionDetails',
+      '@mui/material/AccordionSummary',
       '@mui/material/AppBar',
       '@mui/material/Box',
       '@mui/material/BottomNavigation',
       '@mui/material/BottomNavigationAction',
       '@mui/material/Breadcrumbs',
       '@mui/material/Button',
+      '@mui/material/Card',
+      '@mui/material/CardActionArea',
+      '@mui/material/CardActions',
+      '@mui/material/CardContent',
+      '@mui/material/CardHeader',
+      '@mui/material/CardMedia',
       '@mui/material/CssBaseline',
       '@mui/material/Drawer',
       '@mui/material/Link',

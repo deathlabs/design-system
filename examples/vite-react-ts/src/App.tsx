@@ -1,13 +1,24 @@
 import {
+  Accordion,
+  AccordionActions,
+  AccordionDetails,
+  AccordionSummary,
   AppBar,
   BottomNavigation,
   Breadcrumbs,
   Button,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardHeader,
+  CardMedia,
   DeathlabsThemeProvider,
   Drawer,
   Link,
   Menu,
   Pagination,
+  Paper,
   SpeedDial,
   Stepper,
   Tabs,
@@ -18,7 +29,6 @@ import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
-import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
@@ -100,10 +110,10 @@ export default function App() {
 
             <Box>
               <Typography gutterBottom variant="h4">
-                Navigation primitives
+                Design system primitives
               </Typography>
               <Typography color="text.secondary">
-                A compact view of the navigation components in the design system.
+                A compact view of navigation and surface components in the design system.
               </Typography>
             </Box>
 
@@ -124,6 +134,53 @@ export default function App() {
                 </Typography>
               </Box>
             </Paper>
+
+            <Box
+              sx={{
+                display: 'grid',
+                gap: 3,
+                gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
+              }}
+            >
+              <Card>
+                <CardActionArea>
+                  <CardHeader subheader="Updated today" title="Surface primitives" />
+                  <CardMedia
+                    component="div"
+                    sx={{
+                      background: 'linear-gradient(135deg, #4D1E4A, #E057C9)',
+                      height: 120,
+                    }}
+                  />
+                  <CardContent>
+                    <Typography color="text.secondary">
+                      Cards group related content and actions on a distinct surface.
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+                <CardActions>
+                  <Button>Learn more</Button>
+                  <Button variant="contained">Open</Button>
+                </CardActions>
+              </Card>
+
+              <Box>
+                <Accordion defaultExpanded>
+                  <AccordionSummary expandIcon={<span aria-hidden="true">+</span>}>
+                    <Typography>Theme settings</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography color="text.secondary">
+                      Review the dark palette and custom surface tokens.
+                    </Typography>
+                  </AccordionDetails>
+                  <AccordionActions>
+                    <Button>Cancel</Button>
+                    <Button variant="contained">Apply</Button>
+                  </AccordionActions>
+                </Accordion>
+              </Box>
+            </Box>
 
             <Paper sx={{ p: { xs: 2, sm: 3 } }}>
               <Typography gutterBottom variant="h6">
