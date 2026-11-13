@@ -11,3 +11,4 @@ export * from './Stepper';
 export * from './Tabs';
 export * from './Toolbar';
 export * from './TopNavBar';
+export * from './UserMenu';

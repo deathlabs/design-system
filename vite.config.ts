@@ -6,6 +6,7 @@ const peerDependencies = [
   'react',
   'react-dom',
   '@mui/material',
+  '@mui/icons-material',
   '@emotion/react',
   '@emotion/styled',
 ];

@@ -4,7 +4,6 @@ import {
   AccordionDetails,
   AccordionSummary,
   AppLayout,
-  BottomNavigation,
   Breadcrumbs,
   Button,
   Card,
@@ -17,21 +16,18 @@ import {
   ClassificationBanner,
   DeathlabsThemeProvider,
   Link,
-  Menu,
   Pagination,
   Paper,
   SideNavBar,
-  SpeedDial,
   Stepper,
   Tabs,
   TopNavBar,
+  UserMenu,
 } from '@deathlabs/design-system';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
@@ -40,13 +36,9 @@ import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 
 export default function App() {
-  const [bottomNavigationValue, setBottomNavigationValue] = useState(0);
-  const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
   const [sideNavOpen, setSideNavOpen] = useState(false);
   const [sideNavSelection, setSideNavSelection] = useState('Dashboard');
   const [tabValue, setTabValue] = useState(0);
-
-  const closeMenu = () => setMenuAnchor(null);
 
   return (
     <DeathlabsThemeProvider>
@@ -59,15 +51,7 @@ export default function App() {
         }
         topNavigation={
           <TopNavBar title="deathlabs">
-            <Button
-              aria-controls={menuAnchor ? 'account-menu' : undefined}
-              aria-expanded={menuAnchor ? 'true' : undefined}
-              aria-haspopup="true"
-              color="inherit"
-              onClick={(event) => setMenuAnchor(event.currentTarget)}
-            >
-              Account
-            </Button>
+            <UserMenu />
           </TopNavBar>
         }
         sideNavigation={
@@ -97,22 +81,11 @@ export default function App() {
           </SideNavBar>
         }
       >
-        <Menu
-          anchorEl={menuAnchor}
-          id="account-menu"
-          open={Boolean(menuAnchor)}
-          onClose={closeMenu}
-        >
-          <MenuItem onClick={closeMenu}>Profile</MenuItem>
-          <MenuItem onClick={closeMenu}>Sign out</MenuItem>
-        </Menu>
-
         <Box
           sx={{
             mx: 'auto',
             minWidth: 0,
             p: { xs: 2, sm: 3 },
-            pb: 10,
             width: 'min(100%, 960px)',
           }}
         >
@@ -216,27 +189,6 @@ export default function App() {
               </Stack>
             </Stack>
           </Box>
-
-        <SpeedDial
-          ariaLabel="Create item"
-          icon={<span aria-hidden="true">+</span>}
-          sx={{ bottom: 80, position: 'fixed', right: 24 }}
-        />
-
-        <Paper
-          elevation={8}
-          sx={{ bottom: 0, left: 0, position: 'fixed', right: 0, zIndex: 1200 }}
-        >
-          <BottomNavigation
-            showLabels
-            value={bottomNavigationValue}
-            onChange={(_event, nextValue) => setBottomNavigationValue(nextValue)}
-          >
-            <BottomNavigationAction label="Home" />
-            <BottomNavigationAction label="Projects" />
-            <BottomNavigationAction label="Profile" />
-          </BottomNavigation>
-        </Paper>
       </AppLayout>
     </DeathlabsThemeProvider>
   );
