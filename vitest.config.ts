@@ -35,6 +35,7 @@ export default defineConfig({
       '@mui/material/Link',
       '@mui/material/List',
       '@mui/material/ListItem',
+      '@mui/material/ListItemButton',
       '@mui/material/ListItemText',
       '@mui/material/Menu',
       '@mui/material/MenuItem',
