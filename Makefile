@@ -1,11 +1,9 @@
 # ---------------------------------------------------------
-# Development settings.
+# Set default values.
 # ---------------------------------------------------------
 
-SHELL := /bin/bash
 .DEFAULT_GOAL := dev
-
-EXAMPLE_PATH ?= examples/vite-react-ts
+EXAMPLE ?= vite-react-ts
 
 # ---------------------------------------------------------
 # Build the component library.
@@ -23,4 +21,4 @@ build:
 .PHONY: dev
 .SILENT: dev
 dev: build
-	./scripts/dev.sh "$(EXAMPLE_PATH)"
+	./scripts/dev.sh "examples/$(EXAMPLE)"
