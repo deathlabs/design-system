@@ -1,5 +1,9 @@
-import { Button } from '@deathlabs/design-system';
+import { Button, DeathlabsThemeProvider } from '@deathlabs/design-system';
 
 export default function App() {
-  return <Button variant="contained">Save</Button>;
+  return (
+    <DeathlabsThemeProvider>
+      <Button variant="contained">Save</Button>
+    </DeathlabsThemeProvider>
+  );
 }

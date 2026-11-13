@@ -12,6 +12,17 @@ const dirname =
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
+  optimizeDeps: {
+    include: [
+      '@mui/material/Box',
+      '@mui/material/Button',
+      '@mui/material/CssBaseline',
+      '@mui/material/Paper',
+      '@mui/material/Stack',
+      '@mui/material/Typography',
+      '@mui/material/styles',
+    ],
+  },
   test: {
     projects: [
       {

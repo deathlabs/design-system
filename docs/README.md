@@ -402,6 +402,140 @@ npm run build-storybook
 
 The build command exits automatically and creates the ignored `storybook-static` directory.
 
+## Add the Theme Provider
+
+Use one provider to apply the dark `deathlabs` theme and `CssBaseline` to each application.
+
+**Step 1.** Create the theme module files.
+
+```bash
+mkdir -p src/theme
+touch src/theme/theme.ts
+touch src/theme/theme.types.ts
+touch src/theme/tokens.ts
+touch src/theme/DeathlabsThemeProvider.tsx
+touch src/theme/DeathlabsThemeProvider.stories.tsx
+touch src/theme/index.ts
+```
+
+**Step 2.** Add the custom token types to `src/theme/theme.types.ts`.
+
+```ts
+export interface DeathlabsThemeTokens {
+  colors: {
+    ember: string;
+    raisedSurface: string;
+  };
+  shadows: {
+    glow: string;
+  };
+}
+
+declare module '@mui/material/styles' {
+  interface Theme {
+    deathlabs: DeathlabsThemeTokens;
+  }
+
+  interface ThemeOptions {
+    deathlabs?: DeathlabsThemeTokens;
+  }
+}
+```
+
+**Step 3.** Add the custom token values to `src/theme/tokens.ts`.
+
+```ts
+import type { DeathlabsThemeTokens } from './theme.types';
+
+export const deathlabsTokens = {
+  colors: {
+    ember: '#4D1E4A',
+    raisedSurface: '#3F3542',
+  },
+  shadows: {
+    glow: '0 0 12px rgba(224,87,201,0.7)',
+  },
+} satisfies DeathlabsThemeTokens;
+```
+
+**Step 4.** Create the dark theme in `src/theme/theme.ts`.
+
+```ts
+import { createTheme } from '@mui/material/styles';
+
+import { deathlabsTokens } from './tokens';
+
+const deathlabsTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    background: {
+      default: '#261D29',
+      paper: '#342B37',
+    },
+    primary: {
+      main: '#54485A',
+      contrastText: '#FFFFFF',
+    },
+    secondary: {
+      main: '#E057C9',
+    },
+    divider: 'rgba(255,255,255,0.07)',
+  },
+  deathlabs: deathlabsTokens,
+});
+
+export default deathlabsTheme;
+```
+
+**Step 5.** Implement `DeathlabsThemeProvider` in `src/theme/DeathlabsThemeProvider.tsx`.
+
+```tsx
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
+import type { ReactNode } from 'react';
+
+import deathlabsTheme from './theme';
+
+export interface DeathlabsThemeProviderProps {
+  children: ReactNode;
+}
+
+export function DeathlabsThemeProvider({ children }: DeathlabsThemeProviderProps) {
+  return (
+    <ThemeProvider theme={deathlabsTheme}>
+      <CssBaseline />
+      {children}
+    </ThemeProvider>
+  );
+}
+```
+
+**Step 6.** Add a provider story with a themed child component.
+
+Store the story in `src/theme/DeathlabsThemeProvider.stories.tsx`.
+
+Verify the palette and custom token values in the story play function.
+
+**Step 7.** Export the provider, theme, token values, and token types from `src/theme/index.ts`.
+
+```ts
+export * from './DeathlabsThemeProvider';
+export { default as deathlabsTheme } from './theme';
+export type { DeathlabsThemeTokens } from './theme.types';
+export * from './tokens';
+```
+
+**Step 8.** Export the theme module from `src/index.ts`.
+
+```ts
+export * from './components';
+export * from './theme';
+```
+
+**Step 9.** Add `DeathlabsThemeProvider` as a global decorator in `.storybook/preview.tsx`.
+
+This decorator applies the same baseline theme to every component story.
+
 ## Use the First Component
 
 Use an example application to verify the package in the same repository.
@@ -475,10 +609,14 @@ This configuration prevents invalid hook calls when Vite loads the locally linke
 **Step 9.** Replace the contents of `src/App.tsx` with the Button example.
 
 ```tsx
-import { Button } from '@deathlabs/design-system';
+import { Button, DeathlabsThemeProvider } from '@deathlabs/design-system';
 
 export default function App() {
-  return <Button variant="contained">Save</Button>;
+  return (
+    <DeathlabsThemeProvider>
+      <Button variant="contained">Save</Button>
+    </DeathlabsThemeProvider>
+  );
 }
 ```
 
