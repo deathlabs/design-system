@@ -174,13 +174,14 @@ Use these examples only to verify the Storybook installation.
 
 Keep each story in the same directory as its component.
 
-**Step 1.** Create the Button component directory and source files.
+**Step 1.** Create the Button directory in the inputs component category.
 
 ```bash
-mkdir -p src/components/Button
-touch src/components/Button/Button.tsx
-touch src/components/Button/Button.stories.tsx
-touch src/components/Button/index.ts
+mkdir -p src/components/inputs/Button
+touch src/components/inputs/Button/Button.tsx
+touch src/components/inputs/Button/Button.stories.tsx
+touch src/components/inputs/Button/index.ts
+touch src/components/inputs/index.ts
 touch src/components/index.ts
 touch src/index.ts
 ```
@@ -190,15 +191,17 @@ The commands above create the following source layout.
 ```text
 src/
 ├── components/
-│   ├── Button/
-│   │   ├── Button.stories.tsx
-│   │   ├── Button.tsx
+│   ├── inputs/
+│   │   ├── Button/
+│   │   │   ├── Button.stories.tsx
+│   │   │   ├── Button.tsx
+│   │   │   └── index.ts
 │   │   └── index.ts
 │   └── index.ts
 └── index.ts
 ```
 
-**Step 2.** Implement the Button component in `src/components/Button/Button.tsx`.
+**Step 2.** Implement the Button component in `src/components/inputs/Button/Button.tsx`.
 
 ```tsx
 export { default as Button } from '@mui/material/Button';
@@ -207,7 +210,7 @@ export type { ButtonProps } from '@mui/material/Button';
 
 This implementation preserves the Material UI Button API without changing its behavior.
 
-**Step 3.** Add the Button story to `src/components/Button/Button.stories.tsx`.
+**Step 3.** Add the Button story to `src/components/inputs/Button/Button.stories.tsx`.
 
 ```tsx
 import type { Meta, StoryObj } from '@storybook/react-vite';
@@ -215,7 +218,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Button } from './Button';
 
 const meta = {
-  title: 'Components/Button',
+  title: 'Components/Inputs/Button',
   component: Button,
   parameters: {
     layout: 'centered',
@@ -266,7 +269,7 @@ These stories display the contained, outlined, and text Button variants.
 npm run storybook
 ```
 
-**Step 6.** Verify that Storybook displays the Button story. Open `http://localhost:6006` if Storybook does not open a browser automatically. Select **Components**, and then select **Button** in the sidebar. Verify the Contained, Outlined, and Text stories. Use the Controls panel to change the Button properties.
+**Step 6.** Verify that Storybook displays the Button story. Open `http://localhost:6006` if Storybook does not open a browser automatically. Select **Components**, **Inputs**, and **Button** in the sidebar. Verify the Contained, Outlined, and Text stories. Use the Controls panel to change the Button properties.
 
 **Step 7.** Press `Ctrl+C` in the terminal to stop the Storybook development server.
 
@@ -278,7 +281,13 @@ rm -r stories
 
 **Step 9.** Export the Button from each `index.ts` file.
 
-Add the following export to `src/components/Button/index.ts`.
+Add the following export to `src/components/inputs/Button/index.ts`.
+
+```ts
+export * from './Button';
+```
+
+Add the following export to `src/components/inputs/index.ts`.
 
 ```ts
 export * from './Button';
@@ -287,7 +296,7 @@ export * from './Button';
 Add the following export to `src/components/index.ts`.
 
 ```ts
-export * from './Button';
+export * from './inputs';
 ```
 
 Add the following export to `src/index.ts`.
@@ -636,38 +645,46 @@ npm run dev
 
 Repeat the following workflow for each component after the Button.
 
-**Step 1.** Create a component directory with the component, story, and export files.
+**Step 1.** Select the Material UI category that matches the component.
+
+Use category directories such as `inputs`, `data-display`, `feedback`, `layout`, `navigation`, and `surfaces`.
+
+**Step 2.** Create the component directory with the component, story, and export files.
 
 ```text
-src/components/ComponentName/
-├── ComponentName.stories.tsx
-├── ComponentName.tsx
+src/components/CategoryName/
+├── ComponentName/
+│   ├── ComponentName.stories.tsx
+│   ├── ComponentName.tsx
+│   └── index.ts
 └── index.ts
 ```
 
-**Step 2.** Implement or re-export the Material UI component.
+**Step 3.** Implement or re-export the Material UI component.
 
 Preserve the Material UI API until the design system needs different behavior.
 
-**Step 3.** Add stories for the supported variants, sizes, states, and interactions.
+**Step 4.** Add stories for the supported variants, sizes, states, and interactions.
 
-**Step 4.** Export the component from its `index.ts` file and `src/components/index.ts`.
+**Step 5.** Export the component from its component and category `index.ts` files.
+
+Export the category from `src/components/index.ts`.
 
 The root `src/index.ts` file already exports all components through `src/components/index.ts`.
 
-**Step 5.** Start Storybook from the repository root.
+**Step 6.** Start Storybook from the repository root.
 
 ```bash
 npm run storybook
 ```
 
-**Step 6.** Verify the component stories, Controls, interactions, and accessibility results.
+**Step 7.** Verify the component stories, Controls, interactions, and accessibility results.
 
-**Step 7.** Press `Ctrl+C` in the terminal to stop Storybook.
+**Step 8.** Press `Ctrl+C` in the terminal to stop Storybook.
 
-**Step 8.** Import the component into `examples/vite-react-ts/src/App.tsx`.
+**Step 9.** Import the component into `examples/vite-react-ts/src/App.tsx`.
 
-**Step 9.** Start the library watcher and example application from the repository root.
+**Step 10.** Start the library watcher and example application from the repository root.
 
 ```bash
 make dev
@@ -675,9 +692,9 @@ make dev
 
 The command builds the library, watches source changes, and starts the example application.
 
-**Step 10.** Edit the component and verify that the example application updates.
+**Step 11.** Edit the component and verify that the example application updates.
 
-**Step 11.** Press `Ctrl+C` in the terminal to stop the watcher and example application.
+**Step 12.** Press `Ctrl+C` in the terminal to stop the watcher and example application.
 
 **Step 12.** Verify the static Storybook build.
 
