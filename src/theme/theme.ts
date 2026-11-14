@@ -4,6 +4,9 @@ import { deathlabsTokens } from './tokens';
 
 export const createDeathlabsTheme = (mode: PaletteMode) =>
   createTheme({
+    typography: {
+      fontFamily: "'JetBrains Mono', monospace",
+    },
     palette: {
       mode,
       background:

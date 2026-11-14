@@ -37,7 +37,13 @@ export const AppLayout = ({
         sx={{ position: 'static', width: '100%' }}
       />
     </Box>
-    <Box sx={{ flexShrink: 0 }}>
+    <Box
+      sx={{
+        flexShrink: 0,
+        position: 'relative',
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+      }}
+    >
       <TopNavBar
         data-testid="top-navigation"
         position="static"

@@ -55,6 +55,9 @@ export const Baseline: Story = {
     await expect(deathlabsTheme.palette.primary.contrastText).toBe('#FFFFFF');
     await expect(deathlabsTheme.palette.secondary.main).toBe('#E057C9');
     await expect(deathlabsTheme.palette.divider).toBe('rgba(255,255,255,0.07)');
+    await expect(deathlabsTheme.typography.fontFamily).toBe(
+      "'JetBrains Mono', monospace",
+    );
     await expect(deathlabsTheme.deathlabs.colors.ember).toBe('#4D1E4A');
     await expect(deathlabsTheme.deathlabs.colors.raisedSurface).toBe('#3F3542');
     await expect(deathlabsTheme.deathlabs.shadows.glow).toBe(

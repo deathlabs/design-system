@@ -88,7 +88,13 @@ export const SideNavBar = ({ items }: SideNavBarProps) => {
         aria-expanded={open}
         aria-label={open ? 'Collapse sidebar' : 'Expand sidebar'}
         onClick={toggle}
-        sx={{ alignSelf: open ? 'flex-end' : 'center', m: 0.25 }}
+        sx={{
+          alignSelf: 'flex-start',
+          justifyContent: 'flex-start',
+          width: open ? 'calc(100% - 4px)' : 40,
+          borderRadius: 999,
+          m: 0.25,
+        }}
       >
         {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
       </IconButton>

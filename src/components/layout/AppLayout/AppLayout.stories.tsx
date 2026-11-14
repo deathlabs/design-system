@@ -46,7 +46,11 @@ export const AllRegions: Story = {
     const topNavigationBounds = canvas
       .getByTestId('top-navigation')
       .getBoundingClientRect();
+    const topNavigationRegion = canvas.getByTestId('top-navigation').parentElement!;
     const sideNavigation = canvasElement.querySelector<HTMLElement>('.MuiDrawer-root')!;
+    const sideNavigationPaper = sideNavigation.querySelector<HTMLElement>(
+      '.MuiDrawer-paper',
+    )!;
     const sideNavigationBounds = sideNavigation.getBoundingClientRect();
     const main = canvas.getByRole('main');
     const mainRow = main.parentElement as HTMLElement;
@@ -57,6 +61,9 @@ export const AllRegions: Story = {
 
     await expect(sideNavigationBounds.top).toBeGreaterThanOrEqual(
       topNavigationBounds.bottom,
+    );
+    await expect(Number(getComputedStyle(topNavigationRegion).zIndex)).toBeGreaterThan(
+      Number(getComputedStyle(sideNavigationPaper).zIndex),
     );
     await expect(sideNavigationBounds.top).toBeCloseTo(mainRowBounds.top);
     await expect(sideNavigationBounds.bottom).toBeCloseTo(mainRowBounds.bottom);
