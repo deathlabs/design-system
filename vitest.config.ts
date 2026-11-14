@@ -8,7 +8,9 @@ import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
 
 const dirname =
-  typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
+  typeof __dirname !== 'undefined'
+    ? __dirname
+    : path.dirname(fileURLToPath(import.meta.url));
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
@@ -35,6 +37,7 @@ export default defineConfig({
       '@mui/material/Link',
       '@mui/material/List',
       '@mui/material/ListItem',
+      '@mui/material/ListItemButton',
       '@mui/material/ListItemText',
       '@mui/material/Menu',
       '@mui/material/MenuItem',

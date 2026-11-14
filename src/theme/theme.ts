@@ -1,24 +1,30 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme, type PaletteMode } from '@mui/material/styles';
 
 import { deathlabsTokens } from './tokens';
 
-const deathlabsTheme = createTheme({
-  palette: {
-    mode: 'dark',
-    background: {
-      default: '#261D29',
-      paper: '#342B37',
+export const createDeathlabsTheme = (mode: PaletteMode) =>
+  createTheme({
+    typography: {
+      fontFamily: "'JetBrains Mono', monospace",
     },
-    primary: {
-      main: '#54485A',
-      contrastText: '#FFFFFF',
+    palette: {
+      mode,
+      background:
+        mode === 'dark'
+          ? { default: '#261D29', paper: '#342B37' }
+          : { default: '#F7F4F8', paper: '#FFFFFF' },
+      primary: {
+        main: '#54485A',
+        contrastText: '#FFFFFF',
+      },
+      secondary: {
+        main: '#E057C9',
+      },
+      divider: mode === 'dark' ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.12)',
     },
-    secondary: {
-      main: '#E057C9',
-    },
-    divider: 'rgba(255,255,255,0.07)',
-  },
-  deathlabs: deathlabsTokens,
-});
+    deathlabs: deathlabsTokens,
+  });
+
+const deathlabsTheme = createDeathlabsTheme('dark');
 
 export default deathlabsTheme;

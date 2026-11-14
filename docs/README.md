@@ -24,7 +24,8 @@ node_modules/
 dist/
 .vite/
 storybook-static/
-*-sbom.json
+sbom.json
+scan.json
 ```
 
 **Step 4.** Create the root README file.
@@ -509,7 +510,9 @@ export interface DeathlabsThemeProviderProps {
   children: ReactNode;
 }
 
-export function DeathlabsThemeProvider({ children }: DeathlabsThemeProviderProps) {
+export function DeathlabsThemeProvider({
+  children,
+}: DeathlabsThemeProviderProps) {
   return (
     <ThemeProvider theme={deathlabsTheme}>
       <CssBaseline />
@@ -708,9 +711,9 @@ This loop validates each component in isolation and through the packaged library
 
 Use Semantic Versioning to communicate the effect of each release.
 
-* Run `npm version patch` for backward-compatible fixes and style corrections.
-* Run `npm version minor` for new components and backward-compatible features.
-* Run `npm version major` for removed exports, renamed props, and other breaking changes.
+- Run `npm version patch` for backward-compatible fixes and style corrections.
+- Run `npm version minor` for new components and backward-compatible features.
+- Run `npm version major` for removed exports, renamed props, and other breaking changes.
 
 Keep the package below `1.0.0` until its API and release process are stable.
 

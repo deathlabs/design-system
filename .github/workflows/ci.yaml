@@ -1,0 +1,67 @@
+---
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  GRYPE_VERSION: 0.121.3
+  SEMGREP_VERSION: 1.177.0
+  SYFT_VERSION: 1.57.1
+
+jobs:
+  ci:
+    name: Build, test, and scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install Node.js dependencies
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Install Semgrep
+        run: pipx install "semgrep==$SEMGREP_VERSION"
+
+      - name: Install Syft
+        run: curl -sSfL https://get.anchore.io/syft | sudo sh -s -- -b /usr/local/bin "v$SYFT_VERSION"
+
+      - name: Install Grype
+        run: curl -sSfL https://get.anchore.io/grype | sudo sh -s -- -b /usr/local/bin "v$GRYPE_VERSION"
+
+      - name: Build the Component Library
+        run: make build
+
+      - name: Lint the Component Library
+        run: make lint
+
+      - name: Run Unit Tests
+        run: make tests
+
+      - name: Scan for first-party vulnerabilities
+        run: make sast
+
+      - name: Generate SBOM
+        run: make sbom
+
+      - name: Scan for third-party vulnerabilities
+        run: make dependency-scan

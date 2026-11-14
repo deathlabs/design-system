@@ -1,11 +1,11 @@
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
 
-import { Button } from '../components';
 import { DeathlabsThemeProvider } from './DeathlabsThemeProvider';
 import deathlabsTheme from './theme';
 
@@ -55,6 +55,9 @@ export const Baseline: Story = {
     await expect(deathlabsTheme.palette.primary.contrastText).toBe('#FFFFFF');
     await expect(deathlabsTheme.palette.secondary.main).toBe('#E057C9');
     await expect(deathlabsTheme.palette.divider).toBe('rgba(255,255,255,0.07)');
+    await expect(deathlabsTheme.typography.fontFamily).toBe(
+      "'JetBrains Mono', monospace",
+    );
     await expect(deathlabsTheme.deathlabs.colors.ember).toBe('#4D1E4A');
     await expect(deathlabsTheme.deathlabs.colors.raisedSurface).toBe('#3F3542');
     await expect(deathlabsTheme.deathlabs.shadows.glow).toBe(

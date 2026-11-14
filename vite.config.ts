@@ -6,12 +6,19 @@ const peerDependencies = [
   'react',
   'react-dom',
   '@mui/material',
+  '@mui/icons-material',
   '@emotion/react',
   '@emotion/styled',
 ];
 
 export default defineConfig({
-  plugins: [react(), dts({ include: ['src'] })],
+  plugins: [
+    react(),
+    dts({
+      exclude: ['src/**/*.stories.*'],
+      include: ['src'],
+    }),
+  ],
   build: {
     lib: {
       entry: 'src/index.ts',
