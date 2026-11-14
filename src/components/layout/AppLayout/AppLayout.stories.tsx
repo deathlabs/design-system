@@ -37,7 +37,9 @@ export const AllRegions: Story = {
     children: (
       <Box sx={{ minHeight: 1400, p: 3 }}>
         <Typography variant="h4">Page content</Typography>
-        <Typography color="text.secondary">Scrollable application content</Typography>
+        <Typography color="text.secondary">
+          Scrollable application content
+        </Typography>
       </Box>
     ),
   },
@@ -46,11 +48,12 @@ export const AllRegions: Story = {
     const topNavigationBounds = canvas
       .getByTestId('top-navigation')
       .getBoundingClientRect();
-    const topNavigationRegion = canvas.getByTestId('top-navigation').parentElement!;
-    const sideNavigation = canvasElement.querySelector<HTMLElement>('.MuiDrawer-root')!;
-    const sideNavigationPaper = sideNavigation.querySelector<HTMLElement>(
-      '.MuiDrawer-paper',
-    )!;
+    const topNavigationRegion =
+      canvas.getByTestId('top-navigation').parentElement!;
+    const sideNavigation =
+      canvasElement.querySelector<HTMLElement>('.MuiDrawer-root')!;
+    const sideNavigationPaper =
+      sideNavigation.querySelector<HTMLElement>('.MuiDrawer-paper')!;
     const sideNavigationBounds = sideNavigation.getBoundingClientRect();
     const main = canvas.getByRole('main');
     const mainRow = main.parentElement as HTMLElement;
@@ -62,9 +65,9 @@ export const AllRegions: Story = {
     await expect(sideNavigationBounds.top).toBeGreaterThanOrEqual(
       topNavigationBounds.bottom,
     );
-    await expect(Number(getComputedStyle(topNavigationRegion).zIndex)).toBeGreaterThan(
-      Number(getComputedStyle(sideNavigationPaper).zIndex),
-    );
+    await expect(
+      Number(getComputedStyle(topNavigationRegion).zIndex),
+    ).toBeGreaterThan(Number(getComputedStyle(sideNavigationPaper).zIndex));
     await expect(sideNavigationBounds.top).toBeCloseTo(mainRowBounds.top);
     await expect(sideNavigationBounds.bottom).toBeCloseTo(mainRowBounds.bottom);
     await expect(mainRowBounds.bottom).toBeCloseTo(layoutBounds.bottom);
@@ -73,9 +76,9 @@ export const AllRegions: Story = {
     main.dispatchEvent(new Event('scroll'));
 
     await expect(main.scrollTop).toBeGreaterThan(0);
-    await expect(
-      sideNavigation.getBoundingClientRect().top,
-    ).toBeCloseTo(sideNavigationTop);
+    await expect(sideNavigation.getBoundingClientRect().top).toBeCloseTo(
+      sideNavigationTop,
+    );
     await expect(
       sideNavigation.getBoundingClientRect().top,
     ).toBeGreaterThanOrEqual(topNavigationBounds.bottom);

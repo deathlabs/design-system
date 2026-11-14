@@ -1,10 +1,10 @@
+import Button from '@mui/material/Button';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useId, useState, type MouseEvent } from 'react';
 
-import { Button } from '../../inputs/Button';
 import type { NavBarItem } from '../NavBarItem';
-import { Menu } from '../Menu';
 
 export interface UserMenuProps {
   items: readonly NavBarItem[];
@@ -44,12 +44,7 @@ export const UserMenu = ({ items }: UserMenuProps) => {
         slotProps={{ list: { 'aria-labelledby': buttonId } }}
       >
         {items.map(({ name, href, icon }) => (
-          <MenuItem
-            component="a"
-            href={href}
-            key={name}
-            onClick={closeMenu}
-          >
+          <MenuItem component="a" href={href} key={name} onClick={closeMenu}>
             <ListItemIcon>{icon}</ListItemIcon>
             {name}
           </MenuItem>

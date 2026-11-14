@@ -34,9 +34,9 @@ export const Default: Story = {
     const menuItems = await page.findAllByRole('menuitem');
 
     await expect(menuItems).toHaveLength(4);
-    await expect(menuItems.map((menuItem) => menuItem.getAttribute('href'))).toEqual(
-      items.map((item) => item.href),
-    );
+    await expect(
+      menuItems.map((menuItem) => menuItem.getAttribute('href')),
+    ).toEqual(items.map((item) => item.href));
     await expect(menuItems.map((menuItem) => menuItem.textContent)).toEqual(
       items.map((item) => item.name),
     );
@@ -45,8 +45,6 @@ export const Default: Story = {
 
 export const CustomItems: Story = {
   args: {
-    items: [
-      { name: 'Profile', href: '/profile', icon: <BookIcon /> },
-    ],
+    items: [{ name: 'Profile', href: '/profile', icon: <BookIcon /> }],
   },
 };

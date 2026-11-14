@@ -75,10 +75,16 @@ export const SideNavBar = ({ items }: SideNavBarProps) => {
               onClick={() => setSelectedHref(item.href)}
               sx={{ minHeight: 44, px: 1.25 }}
             >
-              <Box aria-hidden sx={{ flexShrink: 0, textAlign: 'center', width: 24 }}>
+              <Box
+                aria-hidden
+                sx={{ flexShrink: 0, textAlign: 'center', width: 24 }}
+              >
                 {item.icon}
               </Box>
-              <ListItemText primary={item.name} sx={{ ml: 2, opacity: open ? 1 : 0 }} />
+              <ListItemText
+                primary={item.name}
+                sx={{ ml: 2, opacity: open ? 1 : 0 }}
+              />
             </ListItemButton>
           ))}
         </List>

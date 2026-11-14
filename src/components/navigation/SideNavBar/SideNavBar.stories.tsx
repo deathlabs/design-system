@@ -22,7 +22,6 @@ const meta = {
 } satisfies Meta<typeof SideNavBar>;
 
 export default meta;
-
 type Story = StoryObj<typeof meta>;
 
 const items = ['Dashboard', 'Projects', 'Settings'].map((name) => ({
@@ -31,9 +30,7 @@ const items = ['Dashboard', 'Projects', 'Settings'].map((name) => ({
   icon: name[0],
 }));
 
-export const Collapsed: Story = {
-  args: { items },
-};
+export const Collapsed: Story = { args: { items } };
 
 export const FillsContainer: Story = {
   args: { items },
@@ -41,12 +38,12 @@ export const FillsContainer: Story = {
     const layoutBounds = canvasElement
       .querySelector<HTMLElement>('[data-testid="side-nav-layout"]')!
       .getBoundingClientRect();
-    const sideNav = canvasElement.querySelector<HTMLElement>('.MuiDrawer-root')!;
+    const sideNav =
+      canvasElement.querySelector<HTMLElement>('.MuiDrawer-root')!;
     const sideNavBounds = sideNav.getBoundingClientRect();
     const paperBounds = (
       sideNav.querySelector('.MuiDrawer-paper') as HTMLElement
     ).getBoundingClientRect();
-
     await expect(sideNavBounds.top).toBeCloseTo(layoutBounds.top);
     await expect(sideNavBounds.bottom).toBeCloseTo(layoutBounds.bottom);
     await expect(paperBounds.top).toBeCloseTo(sideNavBounds.top);
@@ -58,25 +55,24 @@ export const ToggleControl: Story = {
   args: { items },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-
     const dashboard = canvas.getByRole('link', { name: 'Dashboard' });
-    dashboard.addEventListener('click', (event) => event.preventDefault(), { once: true });
+    dashboard.addEventListener('click', (event) => event.preventDefault(), {
+      once: true,
+    });
     await userEvent.click(dashboard);
-    await expect(canvas.getByRole('button', { name: 'Expand sidebar' })).toHaveAttribute(
-      'aria-expanded',
-      'false',
+    await expect(
+      canvas.getByRole('button', { name: 'Expand sidebar' }),
+    ).toHaveAttribute('aria-expanded', 'false');
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Expand sidebar' }),
     );
-
-    await userEvent.click(canvas.getByRole('button', { name: 'Expand sidebar' }));
     await expect(
       canvas.getByRole('button', { name: 'Collapse sidebar' }),
     ).toHaveAttribute('aria-expanded', 'true');
-
     await userEvent.keyboard('{Enter}');
-    await expect(canvas.getByRole('button', { name: 'Expand sidebar' })).toHaveAttribute(
-      'aria-expanded',
-      'false',
-    );
+    await expect(
+      canvas.getByRole('button', { name: 'Expand sidebar' }),
+    ).toHaveAttribute('aria-expanded', 'false');
   },
 };
 
@@ -90,12 +86,13 @@ export const OverflowingNavigation: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const toggleControl = canvas.getByRole('button', { name: 'Expand sidebar' });
-
+    const toggleControl = canvas.getByRole('button', {
+      name: 'Expand sidebar',
+    });
     await expect(toggleControl).toBeVisible();
-    await expect(toggleControl.getBoundingClientRect().bottom).toBeLessThanOrEqual(
-      canvasElement.getBoundingClientRect().bottom,
-    );
+    await expect(
+      toggleControl.getBoundingClientRect().bottom,
+    ).toBeLessThanOrEqual(canvasElement.getBoundingClientRect().bottom);
   },
 };
 
@@ -104,8 +101,9 @@ export const Selection: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const projects = canvas.getByRole('link', { name: 'Projects' });
-
-    projects.addEventListener('click', (event) => event.preventDefault(), { once: true });
+    projects.addEventListener('click', (event) => event.preventDefault(), {
+      once: true,
+    });
     await userEvent.click(projects);
     await expect(projects).toHaveClass('Mui-selected');
   },

@@ -1,6 +1,12 @@
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, type PaletteMode } from '@mui/material/styles';
-import { createContext, useContext, useMemo, useState, type ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+  type ReactNode,
+} from 'react';
 
 import { createDeathlabsTheme } from './theme';
 
@@ -14,19 +20,23 @@ const DeathlabsColorModeContext = createContext<DeathlabsColorMode>({
   toggleColorMode: () => undefined,
 });
 
-export const useDeathlabsColorMode = () => useContext(DeathlabsColorModeContext);
+export const useDeathlabsColorMode = () =>
+  useContext(DeathlabsColorModeContext);
 
 export interface DeathlabsThemeProviderProps {
   children: ReactNode;
 }
 
-export function DeathlabsThemeProvider({ children }: DeathlabsThemeProviderProps) {
+export function DeathlabsThemeProvider({
+  children,
+}: DeathlabsThemeProviderProps) {
   const [mode, setMode] = useState<PaletteMode>('dark');
   const theme = useMemo(() => createDeathlabsTheme(mode), [mode]);
   const colorMode = useMemo<DeathlabsColorMode>(
     () => ({
       mode,
-      toggleColorMode: () => setMode((currentMode) => currentMode === 'dark' ? 'light' : 'dark'),
+      toggleColorMode: () =>
+        setMode((currentMode) => (currentMode === 'dark' ? 'light' : 'dark')),
     }),
     [mode],
   );

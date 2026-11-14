@@ -1,11 +1,11 @@
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
 
-import { Button } from '../components';
 import { DeathlabsThemeProvider } from './DeathlabsThemeProvider';
 import deathlabsTheme from './theme';
 
